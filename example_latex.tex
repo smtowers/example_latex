@@ -1,0 +1,297 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% example Latex document showing the layout of a paper, with examples of
+% figures and tables, and other paper elements
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\usepackage{epsfig}
+\usepackage{rotating}
+\usepackage[table]{xcolor}
+\definecolor{LightCyan}{rgb}{0.88,1,1}
+\usepackage[none]{hyphenat}
+\usepackage{authblk}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% here are examples of how to define your own commands that you can
+% use in Latex.  Within your analysis code, you can print out results
+% formatted in \newcommand{} statements, such that you don't have to 
+% transcribe data by hand into Latex... you can just copy and paste from your
+% program output
+%
+% I always put a notation in my Latex file stating which R script produced the
+% \newcommand statements, or figures, or tables.
+% These lines were printed out by example_latex_output.R
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\yearmin}{$1995$}
+\newcommand{\yearmax}{$2018$}
+\newcommand{\StdDeviationOfData}{$0.998$} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{An example Latex document}
+
+%\author{Sherry Towers \\
+        %Simon A. Levin Mathematical, Computational and Modeling Sciences Center \\
+        %Arizona State University\\
+        %Tempe, AZ, U.S.A.
+\author[1]{Author A\thanks{A.A@university.edu}}
+\author[1]{Author B\thanks{B.B@university.edu}}
+\author[1]{Author C\thanks{C.C@university.edu}}
+\author[2]{Author D\thanks{D.D@university.edu}}
+\author[2]{Author E\thanks{E.E@university.edu}}
+\affil[1]{Department of Computer Science, \LaTeX\ University}
+\affil[2]{Department of Mechanical Engineering, \LaTeX\ University}
+
+\date{\today}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Here is where you would put your Abstract.
+This analysis examines data from \yearmin\ to \yearmax.
+
+\end{abstract}
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+Here is where you would put your Introduction\footnote{This is an example of a footnote}.
+
+Here is an example of a citation to the Lacum {\it et al} (2014) paper
+that describes the seven key elements
+of scientific paper~\cite{lacum2014teaching}.
+Other papers on this theme are References~\cite{van2016scientific,seiradakis2018training}.
+
+Here is an example of how to insert an extra positive (or negative)
+vertical space in the text:
+\vspace*{1cm}
+
+This space is separated 1cm below the preceding line.
+
+Here is an example of how to insert an extra positive (or negative) horizontal \hspace*{1cm} space in the text.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Methods and Materials}
+\subsection{Data}
+
+If your analysis involves data, here is where you would thoroughly describe it.
+
+This is an example of a bulletted itemized list:
+\begin{itemize}
+\item Item 1
+\item Item 2
+\item Item 3
+\end{itemize}
+
+Here is an example of an enumerated itemized list:
+\begin{enumerate}
+\item Item 1
+\item Item 2
+\item Item 3
+\end{enumerate}
+
+Here is an example of an descriptive itemized list:
+\begin{enumerate}
+\item[Item 1:] describe item 1
+\item[Item 2:] describe item 2
+\item[Item 3:] describe item 3
+\end{enumerate}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Mathematical Model}
+\label{sec:math_model}
+
+If your analysis involves a mathematical model, here is where you would describe it.
+
+This is an example of a set of equations:
+\begin{eqnarray}
+S^\prime & = & -\beta S I/N \nonumber \\
+I^\prime & = & +\beta S I/N -\gamma I\nonumber \\
+R^\prime & = & +\gamma I
+\label{eqn:mymodel}
+\end{eqnarray}
+Here is an example of an inline equation $S^\prime = -\beta S I/N$.
+
+Here is a reference to Equation~\ref{eqn:mymodel} in the text.  Note that when you
+reference specific equations, tables, or paper sections in the text, you always 
+capitalise those nouns.  Here is a reference to Section~\ref{sec:math_model}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Statistical methods}
+
+If your analysis involves any kind of specialised statistical methodology, here is
+where you would describe it.
+
+To account for potential over-dispersion in count data involved our analyses, we utilized
+Negative Binomial likelihood fits~\cite{lloyd2007maximum}. 
+The probability mass function (PMF) of the Negative Binomial distribution for observing $k$
+counts when $\lambda$ are expected is~\cite{lloyd2007maximum}
+\begin{eqnarray}
+f(k|\lambda,\alpha) & = &
+{{\Gamma(\alpha+k)}\over{k! \Gamma(\alpha)}}
+\left({{\lambda}\over{\lambda+\alpha}}\right)^k
+\left(1+{{\lambda}\over{\alpha}}\right)^{-\alpha}
+\hspace*{1cm} \lambda>0,\alpha>0,
+\label{eqn:nb}
+\end{eqnarray}
+where $\alpha$ is the over-dispersion parameter.
+The mean of the PMF is $\lambda$.
+When $\alpha\rightarrow \infty$ the Poisson distribution is obtained, and when
+$\alpha\rightarrow 0$ (i.e. highly over-dispersed data) 
+the log-series distribution is obtained~\cite{lloyd2007maximum}.
+The Akaike Information Criterion (AIC) was used for selection of the appropriate 
+model~\cite{akaike1974new}.
+
+Given a set of $M$ observations of the number of
+violent crimes per day, $k_i$, with $i=1,...,M$
+the likelihood of the observations is
+\begin{eqnarray}
+{{\cal{L}}} & = & \prod_{i=1}^{M} f(k_i|\lambda(t_i),\alpha),
+\label{eqn:like}
+\end{eqnarray}
+where $\lambda(t_i)$ is the expected number of counts on day $t_i$.
+The best-fit model values
+used in the calculation of the $\lambda(t_i)$ are the values that maximize this
+likelihood~\cite{cowan1998statistical}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results}
+
+Here, without discussion, is where you present your results, either within a
+paragraph, or as a figure, or a table.
+
+Here is an example of a reference to Figure~\ref{fig:figure1} in the text.  Here
+is an example to a reference to Table~\ref{tab:table1}, which is delimited by
+vertical lines.  Table~\ref{tab:table2} is a rotated table in landscape format,
+with every second line coloured blue to aid in readability.
+
+The one standard deviation uncertainty in my data was~\StdDeviationOfData.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Produced by example_latex.R
+% It is always a good idea to put a notation
+% stating which R script produced the figure
+% or table results
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{figure}[h]
+   \begin{center}
+    \mbox{\put(-190,0){ \epsfxsize=13cm
+           \epsffile{example_latex_histogram_plot.eps}
+     }}
+     \vspace*{-0.0cm}
+  \caption{
+      \label{fig:figure1}
+Histogram of Normally distributed data
+   }
+\end{center}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}
+\begin{center}
+\caption{
+Here is an example of a table delimited by vertical lines.
+\hskip 2in}\label{tab:table1}
+\begin{tabular}{|l|l|l|}
+\hline
+ & Percentage increase in casualties & p-value \\
+\hline
+Effect A   &    $17\%$ $[16\%,18\%]$  &($p\!<\!0.001$)   \\
+Effect B   &    $74\%$ $[53\%,97\%]$ & ($p\!<\!0.001$)   \\
+Effect C   &  $141\%$ $[93\%,197\%]$ & ($p\!<\!0.001$)   \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{sidewaystable}
+\begin{center}
+\caption{
+This is an example of a sideways table, with every second row coloured blue.
+}\hspace*{1in}\label{tab:table2}
+\begin{tabular}{lll}
+\hline
+ & Percentage increase in casualties &  p-value \\
+\hline
+\rowcolor{LightCyan}
+ Each extra firearm used by perpetrator   &     $12\%$ $[7\%,17\%]$ & ($p\!<\!0.001$)   \\
+    Use of assault rifle by perpetrator   &   $83\%$ $[59\%,109\%]$ & ($p\!<\!0.001$)   \\
+\rowcolor{LightCyan}
+             Perpetrator mental illness   &  $129\%$ $[83\%,184\%]$ & ($p\!<\!0.001$)   \\
+                            End of FAWB   &  $176\%$ $[57\%,352\%]$ & ($p\!<\!0.001$)   \\
+\rowcolor{LightCyan}
+  Beginning of changed response tactics   & $-49\%$ $[-71\%,-16\%]$ &       ($p=0.010$)   \\
+\hline
+\end{tabular}
+\end{center}
+\end{sidewaystable}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% use clearpage if you want all plots and figures before this point to be
+% output before the text that comes after the clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion}
+
+Here is where you would discuss your results, putting them in context of past research.
+You would also discuss the weaknesses of the study methodology.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Summary}
+
+Here is where you would briefly summarise the results of the study and the conclusions and implications that can be drawn.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% here is where you would put the name of your bibtex file (minus the .bib extension)
+% the unsrt bibliography style sorts the citations by order they were referenced
+% in the text
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{unsrt}
+\bibliography{example_latex}
+
+\end{document}
