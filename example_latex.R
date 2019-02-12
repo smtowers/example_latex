@@ -3,6 +3,11 @@
 set.seed(42542)
 x = rnorm(10000)
 
+require("extrafont")
+loadfonts(device = "postscript")
+ps.options(fonts="Arial")
+
+
 for (iter in 1:2){
   if (iter==2){
     setEPS()
