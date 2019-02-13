@@ -9,7 +9,20 @@
 \usepackage[table]{xcolor}
 \definecolor{LightCyan}{rgb}{0.88,1,1}
 \usepackage[none]{hyphenat}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% allows multiple authors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{authblk}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% stuff for making compartmental diagrams with the Latex tikz package
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{bm}
+\usepackage{fixltx2e}
+\usepackage{tikz}
+\renewcommand{\familydefault}{\sfdefault}
+\DeclareMathSizes{10}{14}{11}{14}
+\usetikzlibrary{shapes,arrows,positioning,calc}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -132,6 +145,62 @@ Here is an example of an inline equation $S^\prime = -\beta S I/N$.
 Here is a reference to Equation~\ref{eqn:mymodel} in the text.  Note that when you
 reference specific equations, tables, or paper sections in the text, you always 
 capitalise those nouns.  Here is a reference to Section~\ref{sec:math_model}.
+
+
+Here is an example of a compartmental model diagram, using the tikz package in 
+Latex:
+\tikzstyle{decision} = [diamond, draw, fill=blue!20,
+    text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, line width=0.5mm,
+    text width=5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [line width=0.5mm,draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+    minimum height=2em]
+\tikzstyle{myarrows}=[line width=1mm,draw=blue,-triangle 45,postaction={draw, line width=3mm, shorten >=4mm, -}]
+
+\begin{tikzpicture}[node distance = 2cm, auto]
+    % Place nodes
+    \node [block] (S) {\bf S};
+    \node [block, below=1.5cm of S] (E) {\bf E};
+    \node [block, below=1.5cm of E] (I) {\bf I};
+    \node [block, right=2.5cm of S] (Qs) {\bf Q\textsubscript{S}};
+    \node [block, right=2.5cm of E] (Qe) {\bf Q\textsubscript{E}};
+    \node [block, right=2.5cm of I] (H) {\bf H};
+    \node [block, below right=1.5cm and 0.25cm of I] (R) {\bf R};
+    \node [block, below=1.5cm of R] (D) {\bf D};
+    \node [block, below=1.5cm of D] (B) {\bf B};
+
+
+    %% Draw edges
+
+    \path [line] ([yshift=-0.3cm]S.north east) -- node[above=5pt] {$\bm{(1-\omega)\alpha \rho {\sf I/N_2}}$} ([yshift=-0.3cm]Qs.north west);
+    %\path [line] ([yshift=-0.3cm]S.north east) -- node[above=5pt] {$\bm{{{(1-\omega)\alpha \rho {\sf I}}\over{{\sf N_2}}}}$} ([yshift=-0.3cm]Qs.north west);
+
+    \path [line] ([yshift=+0.3cm]Qs.south west) -- node {$\bm{\nu+\chi}$} ([yshift=+0.3cm]S.south east);
+
+    \path [line] ([yshift=-0.3cm]E.north east) -- node[above=5pt] {$\bm{\omega\alpha \rho {\sf I/N}_2}$} ([yshift=-0.3cm]Qe.north west);
+    \path [line] ([yshift=+0.3cm]Qe.south west) -- node {$\bm{\nu}$} ([yshift=+0.3cm]E.south east);
+
+    \path [line] (S) -- node[left=1pt] {$\bm{(\lambda {\sf I} + \tau \lambda {\sf D})/{\sf N}_1}$} (E);
+
+    \path [line] (E) -- node[left=1pt] {$\bm{\kappa}$} (I);
+    \path [line] (Qe) -- node[right=1pt] {$\bm{\kappa}$} (H);
+
+    \path [line] (I) -- node {$\bm{\rho}$} (H);
+
+    \path [line] (I) -- node[left=1pt] {$\bm{\gamma}$} (R);
+
+    \path [line] (H) -- node[right=1pt] {$\bm{\gamma}$} (R);
+
+    \path [line] (I) -- node[left=1pt] {$\bm{\mu}$} (D.north west);
+
+    \path [line] (H) -- node[right=1pt] {$\bm{\mu}$} (D.north east);
+
+    \path [line] (D) -- node {$\bm{\delta}$} (B);
+
+\end{tikzpicture}
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
